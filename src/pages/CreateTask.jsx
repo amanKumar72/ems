@@ -15,62 +15,69 @@ const CreateTask = () => {
           Create Task
         </h1>
       </div>
+
       <div className="flex items-center justify-center">
-        <form
-          className="flex flex-col gap-2 p-5 w-full bg-[#1e1c1c] rounded-2xl  "
-          
-        >
-          <label htmlFor="name" className="">
-            Task Title
-          </label>
-          <input
-            type="text"
-            placeholder="Enter title of task"
-            name="name"
-            id="name"
-            className="text-sm py-1 px-2 md:text-lg md:py-2 md:px-4 md:w-4/5 rounded outline-none bg-transparent border-[1px] border-gray-500 mb-4"
-            {...register("name", { required: "title is mandatory" })}
-          />
-          <label htmlFor="date">Date</label>
-          <input
-            type="date"
-            name="date"
-            id="date"
-            className="text-sm py-1 px-2 md:text-lg md:py-2 md:px-4 md:w-4/5 rounded outline-none bg-transparent border-[1px] border-gray-500 mb-4"
-            {...register("date", { required: true })}
-          />
-          <label htmlFor="assignTo">Assign To</label>
-          <input
-            type="text"
-            name="assignTo"
-            id="assignTo"
-            className="text-sm py-1 px-2 md:text-lg md:py-2 md:px-4 md:w-4/5 rounded outline-none bg-transparent border-[1px] border-gray-500 mb-4"
-            {...register("assignTo", { required: true })}
-          />
-          <label htmlFor="catagory">Catagory</label>
-          <input
-            type="text"
-            name="catagory"
-            id="catagory"
-            placeholder="Database,Marketing ..."
-            className="text-sm py-1 px-2 md:text-lg md:py-2 md:px-4 md:w-4/5 rounded outline-none bg-transparent border-[1px] border-gray-500 mb-4"
-            {...register("catagory", { required: true })}
-          />
-          <label htmlFor="description">Description</label>
-          <textarea
-            name="description"
-            rows={3}
-            id="description"
-            placeholder="Detailed description of the task (max 100 words)"
-            className="text-sm py-1 px-2 md:text-lg md:py-2 md:px-4 md:w-4/5 rounded outline-none bg-transparent border-[1px] border-gray-500 mb-4"
-            {...register("description", { required: true })}
-          ></textarea>
+        <form className="flex flex-col w-full bg-[#1e1c1c] rounded-2xl ">
+          <div className="flex flex-col md:flex-row pt-2">
+            <div className="flex flex-col gap-2 px-5 md:p-5 md:w-1/2">
+              <label htmlFor="name" className="">
+                Task Title
+              </label>
+              <input
+                type="text"
+                placeholder="Enter title of task"
+                name="name"
+                id="name"
+                className="text-sm py-1 px-2 md:text-lg md:py-2 md:px-4 md:w-4/5 rounded outline-none bg-transparent border-[1px] border-gray-500 mb-4"
+                {...register("name", { required: "title is mandatory" })}
+              />
+              <label htmlFor="date">Date</label>
+              <input
+                type="date"
+                name="date"
+                id="date"
+                className="text-sm py-1 px-2 md:text-lg md:py-2 md:px-4 md:w-4/5 rounded outline-none bg-transparent border-[1px] border-gray-500 mb-4"
+                {...register("date", { required: true })}
+              />
+              <label htmlFor="assignTo">Assign To</label>
+              <input
+                type="email"
+                placeholder="enter email of employee"
+                name="assignTo"
+                id="assignTo"
+                className="text-sm py-1 px-2 md:text-lg md:py-2 md:px-4 md:w-4/5 rounded outline-none bg-transparent border-[1px] border-gray-500 mb-4"
+                {...register("assignTo", { required: true })}
+              />
+              <label htmlFor="catagory">Catagory</label>
+              <input
+                type="text"
+                name="catagory"
+                id="catagory"
+                placeholder="Database,Marketing ..."
+                className="text-sm py-1 px-2 md:text-lg md:py-2 md:px-4 md:w-4/5 rounded outline-none bg-transparent border-[1px] border-gray-500 mb-4"
+                {...register("catagory", { required: true })}
+              />
+            </div>
+            <div className="flex flex-col gap-2 px-5 md:p-5 md:w-1/2">
+              <label htmlFor="description">Description</label>
+              <textarea
+                name="description"
+                rows="12"
+                id="description"
+                placeholder="Detailed description of the task (max 100 words)"
+                className="text-sm py-1 px-2 md:text-lg md:py-2 md:px-4 md:w-4/5 rounded outline-none bg-transparent border-[1px] border-gray-500 mb-4"
+                {...register("description", { required: true })}
+              ></textarea>
+            </div>
+          </div>
           <Link
             to="/admin"
             type="submit"
-            onClick={handleSubmit(data=>console.log(data))}
-            className="m-auto border-none rounded-full px-9 py-2 md:px-12 md:py-4 bg-black md:w-[50%]  text-xl md:text-2xl cursor-pointer font-bold hover:bg-[#101010]text-center"
-          >Create </Link>
+            onClick={handleSubmit((data) => console.log(data))}
+            className="mx-auto mb-2 border-none rounded-full px-9 py-2 md:px-12 md:py-4 bg-black md:w-[50%]  text-xl md:text-2xl cursor-pointer font-bold hover:bg-[#101010] text-center"
+          >
+            Create{" "}
+          </Link>
         </form>
       </div>
     </div>

@@ -1,6 +1,6 @@
-import Header from "../comps/Header"
-import TaskListOverview from "../TaskList/TaskListOverview"
-import AllTasks from "../TaskList/AllTasks"
+import Header from "../components/comps/Header"
+import TaskListOverview from "../components/TaskList/TaskListOverview"
+import AllTasks from "../components/TaskList/AllTasks"
 const EmployeeDashboard = () => {
   return (
     <div className="h-screen w-full">

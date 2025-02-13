@@ -1,4 +1,4 @@
-import Header from "../comps/Header";
+import Header from '../components/comps/Header';
 import { Link } from "react-router-dom";
 const AdminDashboard = () => {
   return (
