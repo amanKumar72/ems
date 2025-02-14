@@ -1,9 +1,14 @@
 const TaskListOverview = () => {
+  
+  const user=JSON.parse(localStorage.getItem("user")).data;
+  
+  console.log(user);
+
   const taskListOverview = [
-    { type: "New Task", value: 1, color: "blue-500" },
-    { type: "Completed Task", value: 1, color: "amber-300" ,textColor:'black-500'},
-    { type: "Accepted Task", value: 1, color: "green-500" },
-    { type: "Failed Task", value: 1, color: "red-600" },
+    { type: "New Task", value: user.taskCounts.newTask, color: "blue-500" },
+    { type: "Completed Task", value: user.taskCounts.completed, color: "amber-300" ,textColor:'black-500'},
+    { type: "Accepted Task", value: user.taskCounts.active, color: "green-500" },
+    { type: "Failed Task", value: user.taskCounts.failed, color: "red-600" },
   ];
   return (
     <div className="flex justify-evenly flex-wrap md:flex-nowrap gap-5 px-5 py-7 screen ">

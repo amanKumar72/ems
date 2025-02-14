@@ -1,23 +1,39 @@
 import { useForm } from "react-hook-form";
 import { IoChevronBackCircleOutline } from "react-icons/io5";
 import { useNavigate, Link } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { AuthenticationContext } from "../context/AuthContext";
 
 const CreateMember = () => {
-  const { register, handleSubmit ,setError,formState:{errors}} = useForm();
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm();
+
   const nav = useNavigate();
-  const [showPassword, setShowPassword,] = useState(false); 
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false); 
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const context=useContext(AuthenticationContext)
+
+  const user=JSON.parse(context.getUser())
+
   const onSubmit = (data) => {
-    data.password!=data.confirmPassword?setError('confirmPassword',{
-      type: "manual",
-      message: "Confirm Password Should Be Same as Password!",
-    }):nav('/admin');
-    
+    if (data.password != data.confirmPassword) {
+      setError("confirmPassword", {
+        type: "manual",
+        message: "Confirm Password Should Be Same as Password!",
+      });
+    } else {
+      context.addEmployee(user.data.id,data)
+      nav("/admin");
+    }
     console.log(data);
-    // submit the form to your server here
-    // nav(-1); // Navigate back to previous page
   };
   return (
     <div className="flex-col  justify-center items-center p-5 md:pt-8 ">
@@ -108,7 +124,11 @@ const CreateMember = () => {
                 <FaEye className="text-gray-500" />
               )}
             </button>
-            {errors.confirmPassword && <p className="text-red-500 text-sm  ">{errors.confirmPassword.message}</p>}
+            {errors.confirmPassword && (
+              <p className="text-red-500 text-sm  ">
+                {errors.confirmPassword.message}
+              </p>
+            )}
           </div>
 
           <Link

@@ -1,9 +1,19 @@
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { IoChevronBackCircleOutline } from "react-icons/io5";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { AuthenticationContext } from "../context/AuthContext";
 const CreateTask = () => {
   const { register, handleSubmit } = useForm();
+  const context = useContext(AuthenticationContext);
+
   const nav = useNavigate();
+  const onSubmit = (data) => {
+    console.log(data);
+    context.addTask(data);
+    nav('/admin'); 
+  };
+
   return (
     <div className="flex-col p-5 md:pt-8 ">
       <div className="flex gap-2 items-center mb-5">
@@ -17,7 +27,10 @@ const CreateTask = () => {
       </div>
 
       <div className="flex items-center justify-center">
-        <form className="flex flex-col w-full bg-[#1e1c1c] rounded-2xl ">
+        <form
+          className="flex flex-col w-full bg-[#1e1c1c] rounded-2xl "
+          onSubmit={handleSubmit((data) => onSubmit(data))}
+        >
           <div className="flex flex-col md:flex-row pt-2">
             <div className="flex flex-col gap-2 px-5 md:p-5 md:w-1/2">
               <label htmlFor="name" className="">
@@ -48,14 +61,14 @@ const CreateTask = () => {
                 className="text-sm py-1 px-2 md:text-lg md:py-2 md:px-4 md:w-4/5 rounded outline-none bg-transparent border-[1px] border-gray-500 mb-4"
                 {...register("assignTo", { required: true })}
               />
-              <label htmlFor="catagory">Catagory</label>
+              <label htmlFor="category">Category</label>
               <input
                 type="text"
-                name="catagory"
-                id="catagory"
+                name="category"
+                id="category"
                 placeholder="Database,Marketing ..."
                 className="text-sm py-1 px-2 md:text-lg md:py-2 md:px-4 md:w-4/5 rounded outline-none bg-transparent border-[1px] border-gray-500 mb-4"
-                {...register("catagory", { required: true })}
+                {...register("category", { required: true })}
               />
             </div>
             <div className="flex flex-col gap-2 px-5 md:p-5 md:w-1/2">
@@ -70,14 +83,12 @@ const CreateTask = () => {
               ></textarea>
             </div>
           </div>
-          <Link
-            to="/admin"
+          <button
             type="submit"
-            onClick={handleSubmit((data) => console.log(data))}
             className="mx-auto mb-2 border-none rounded-full px-9 py-2 md:px-12 md:py-4 bg-black md:w-[50%]  text-xl md:text-2xl cursor-pointer font-bold hover:bg-[#101010] text-center"
           >
-            Create{" "}
-          </Link>
+            Create
+          </button>
         </form>
       </div>
     </div>

@@ -1,9 +1,14 @@
-import { NavLink } from "react-router-dom";
+import { NavLink,useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-
-import { useState } from "react";
+import {AuthenticationContext} from '../context/AuthContext'
+import { useContext, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 const SignUp = () => {
+  
+  const context=useContext(AuthenticationContext)
+
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -11,12 +16,19 @@ const SignUp = () => {
   } = useForm();
   const [showPassword, setShowPassword] = useState(false);
 
+  
+  const onSubmit = (data) => {
+    const user=context.signUp(data)
+    console.log(user);
+    navigate('/admin')
+  };
+
   return (
     <div className="w-screen h-screen flex flex-col gap-4 px-2 items-center justify-center ">
       <h1 className="text-2xl font-bold">Sign Up as an Admin</h1>
       <div className="flex flex-col border-2 p-5  border-red-600 rounded-xl ">
         <form
-          onSubmit={handleSubmit((data) => console.log(data))}
+          onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col w-full  justify-center gap-5 "
         >
           <input

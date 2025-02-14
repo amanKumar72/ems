@@ -1,38 +1,13 @@
 import TaskDetail from "../comps/TaskDetail"
 
 const AllTasks = () => {
-    const bgColors=['lime-400','red-400' ,'fuchsia-500','blue-500']
-    const tasks=[{
-        catagory: "Database",
-        date: "11-02-2025",
-        title: "Database Optimization",
-        description:
-          "Optamze the query for the better performance of the database",
-      },{
-        catagory: "Database",
-        date: "11-02-2025",
-        title: "Database Optimization",
-        description:
-          "Optamze the query for the better performance of the database",
-      },{
-        catagory: "Database",
-        date: "11-02-2025",
-        title: "Database Optimization",
-        description:
-          "Optamze the query for the better performance of the database",
-      },{
-        catagory: "Database",
-        date: "11-02-2025",
-        title: "Database Optimization",
-        description:
-          "Optamze the query for the better performance of the database",
-      },{
-        catagory: "Database",
-        date: "11-02-2025",
-        title: "Database Optimization",
-        description:
-          "Optamze the query for the better performance of the database",
-      }]
+
+  
+  const user=JSON.parse(localStorage.getItem("user")).data;
+  console.log("User",user.tasks);
+
+    const bgColors=['lime-500','red-500' ,'fuchsia-500','blue-500']
+    const tasks=user.tasks
 
   return (
     <div className="flex gap-2 px-3 flex-wrap">
