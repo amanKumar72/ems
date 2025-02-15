@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { IoChevronBackCircleOutline } from "react-icons/io5";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate,  } from "react-router-dom";
 import { useContext, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { AuthenticationContext } from "../context/AuthContext";
@@ -21,7 +21,7 @@ const CreateMember = () => {
 
   const context=useContext(AuthenticationContext)
 
-  const user=JSON.parse(context.getUser())
+  const user=context.getUser()
 
   const onSubmit = (data) => {
     if (data.password != data.confirmPassword) {
@@ -33,7 +33,6 @@ const CreateMember = () => {
       context.addEmployee(user.data.id,data)
       nav("/admin");
     }
-    console.log(data);
   };
   return (
     <div className="flex-col  justify-center items-center p-5 md:pt-8 ">
@@ -47,7 +46,8 @@ const CreateMember = () => {
         </h1>
       </div>
       <div className="flex items-center  justify-center">
-        <form className="flex flex-col gap-1 p-5  max-w-[420px]  w-full bg-[#1e1c1c] rounded-2xl  ">
+        <form className="flex flex-col gap-1 p-5  max-w-[420px]  w-full bg-[#1e1c1c] rounded-2xl  " 
+            onSubmit={handleSubmit((data)=>onSubmit(data))}>
           <label htmlFor="name" className="mb-1">
             Name
           </label>
@@ -131,14 +131,12 @@ const CreateMember = () => {
             )}
           </div>
 
-          <Link
-            to="/admin"
+          <button
             type="submit"
-            onClick={handleSubmit(onSubmit)}
             className="m-auto border-none rounded-full px-9 py-2 md:px-12 md:py-4 bg-red-700 md:w-[50%]  text-xl md:text-2xl cursor-pointer font-bold hover:bg-red-600 text-center"
           >
-            Create{" "}
-          </Link>
+            Create
+          </button>
         </form>
       </div>
     </div>

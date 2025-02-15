@@ -20,7 +20,6 @@ const Login = () => {
 
   const onSubmit = (data) => {
     const user=context.login(data.email,data.password)
-    console.log(user);
     
     if(user){
       user.role=="admin" ?navigate('/admin'):navigate('/employee')

@@ -1,11 +1,10 @@
-import { NavLink,useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import {AuthenticationContext} from '../context/AuthContext'
+import { AuthenticationContext } from "../context/AuthContext";
 import { useContext, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 const SignUp = () => {
-  
-  const context=useContext(AuthenticationContext)
+  const context = useContext(AuthenticationContext);
 
   const navigate = useNavigate();
 
@@ -16,11 +15,9 @@ const SignUp = () => {
   } = useForm();
   const [showPassword, setShowPassword] = useState(false);
 
-  
   const onSubmit = (data) => {
-    const user=context.signUp(data)
-    console.log(user);
-    navigate('/admin')
+    context.signUp(data);
+    navigate("/admin");
   };
 
   return (

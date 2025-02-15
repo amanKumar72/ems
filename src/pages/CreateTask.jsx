@@ -9,7 +9,6 @@ const CreateTask = () => {
 
   const nav = useNavigate();
   const onSubmit = (data) => {
-    console.log(data);
     context.addTask(data);
     nav('/admin'); 
   };
@@ -54,8 +53,8 @@ const CreateTask = () => {
               />
               <label htmlFor="assignTo">Assign To</label>
               <input
-                type="email"
-                placeholder="enter email of employee"
+                type="text"
+                placeholder="enter name of employee"
                 name="assignTo"
                 id="assignTo"
                 className="text-sm py-1 px-2 md:text-lg md:py-2 md:px-4 md:w-4/5 rounded outline-none bg-transparent border-[1px] border-gray-500 mb-4"

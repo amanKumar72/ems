@@ -14,7 +14,7 @@ const App = () => {
   const context = useContext(AuthenticationContext);
   const nav = useNavigate();
   useEffect(() => {
-    const user=JSON.parse(context.getUser())
+    const user=context.getUser()
     if (user) {
       console.log(user)
       user.role == "admin" ? nav("admin") : nav("employee");

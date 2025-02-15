@@ -220,7 +220,7 @@ const admins = [
     id: 2,
     email: "a2@e.com",
     password: "123",
-    employees: [4, 5, 6],
+    employees: [4, 5],
     firstName: "Sunny",
   },
 ];
@@ -248,23 +248,37 @@ const AuthenticationProvider = ({ children }) => {
       },
       tasks: [],
     };
+
+    const admin = adminData[adminId - 1];
+    admin.employees.push(employee.id);
     setEmployeesData([...employeesData, employee]);
-    setAdminData([
-      ...adminData,
-      adminData[adminId].employees.push(employee.id),
-    ]);
-    console.log(employeesData, adminData);
+    setAdminData([...adminData]);
+
+    localStorage.setItem(
+      "user",
+      JSON.stringify({
+        role: "admin",
+        data: { ...admin },
+      })
+    );
   };
 
   // Remove employee by a admin
   const removeEmployee = (adminId, id) => {
     setEmployeesData(employeesData.filter((employee) => employee.id !== id));
     setAdminData([...adminData, adminData[adminId].employees.pop(id)]);
+
+    localStorage.setItem(
+      "user",
+      JSON.stringify({
+        role: "admin",
+        data: [...adminData, adminData[adminId].employees.pop(id)],
+      })
+    );
   };
 
   //add a new admin or create a new user
   const signUp = (admin) => {
-    console.log(admin);
     const Log = {
       firstName: admin.name,
       email: admin.email,
@@ -307,17 +321,17 @@ const AuthenticationProvider = ({ children }) => {
   };
 
   //get the user from local storage
-  const getUser = () => localStorage.getItem("user");
+  const getUser = () => JSON.parse(localStorage.getItem("user"));
 
-  const getEmployees = (ids) =>
-    employeesData.filter((emp) => ids.includes(emp.id));
+  const getEmployees = (ids) => {
+    return employeesData.filter((emp) => ids.includes(emp.id));
+  };
 
   //add a new task to an employee
   const addTask = (data) => {
     const employee = employeesData.find(
-      (employee) => employee.email == data.assignTo
+      (employee) => employee.firstName == data.assignTo.trim()
     );
-    console.log(employee);
     employee.tasks.push({
       active: true,
       newTask: true,
@@ -331,10 +345,50 @@ const AuthenticationProvider = ({ children }) => {
     employee.taskCounts.active++;
     employee.taskCounts.newTask++;
     setEmployeesData([
-      employeesData.filter((emp) => emp.email != data.assignTo),
+      ...employeesData.filter((emp) => emp.firstName != data.assignTo),
       employee,
     ]);
-    console.log(employeesData);
+  };
+
+  //mark as completed
+  const markCompleted = (employeeId, taskId) => {
+    const employee = employeesData.find((emp) => emp.id === employeeId);
+
+    if (employee.tasks[taskId] && !employee.tasks[taskId].completed) {
+      employee.tasks[taskId].completed = true;
+      employee.tasks[taskId].active = false;
+      employee.taskCounts.completed++;
+      employee.taskCounts.active--;
+    }
+
+    setEmployeesData([
+      ...employeesData.filter((emp) => emp.id !== employeeId),
+      employee,
+    ]);
+    localStorage.setItem(
+      "user",
+      JSON.stringify({ role: "employee", data: employee })
+    );
+  };
+
+  // mark as failed
+  const markFailed = (employeeId, taskId) => {
+    const employee = employeesData.find((emp) => emp.id === employeeId);
+
+    if (employee.tasks[taskId] && !employee.tasks[taskId].failed) {
+      employee.tasks[taskId].failed = true;
+      employee.tasks[taskId].active = false;
+      employee.taskCounts.failed++;
+      employee.taskCounts.active--;
+    }
+    setEmployeesData([
+      ...employeesData.filter((emp) => emp.id !== employeeId),
+      employee,
+    ]);
+    localStorage.setItem(
+      "user",
+      JSON.stringify({ role: "employee", data: employee })
+    );
   };
 
   return (
@@ -349,7 +403,9 @@ const AuthenticationProvider = ({ children }) => {
         addEmployee,
         removeEmployee,
         addTask,
-        getEmployees
+        getEmployees,
+        markCompleted,
+        markFailed,
       }}
     >
       {children}
