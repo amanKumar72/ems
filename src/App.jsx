@@ -14,15 +14,15 @@ const App = () => {
   const context = useContext(AuthenticationContext);
   const nav = useNavigate();
   useEffect(() => {
-    const user=context.getUser()
+    const user = context.getUser();
     if (user) {
-      console.log(user)
+      console.log(user);
       user.role == "admin" ? nav("admin") : nav("employee");
     } else {
-      nav("/");
+      nav("/home");
     }
   }, []);
-  
+
   return (
     <>
       <Routes>
