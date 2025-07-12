@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { IoChevronBackCircleOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
@@ -7,10 +7,18 @@ const CreateTask = () => {
   const { register, handleSubmit } = useForm();
   const context = useContext(AuthenticationContext);
 
+  const [employees, setEmployees] = useState(null);
+  useEffect(() => {
+    const employeesIds = context.getUser().data.employees;
+
+    const emps = context.getEmployees(employeesIds);
+    setEmployees(emps, employeesIds);
+    console.log(emps);  
+  }, []);
   const nav = useNavigate();
   const onSubmit = (data) => {
     context.addTask(data);
-    nav('/admin'); 
+    nav("/admin");
   };
 
   return (
@@ -52,14 +60,18 @@ const CreateTask = () => {
                 {...register("date", { required: true })}
               />
               <label htmlFor="assignTo">Assign To</label>
-              <input
-                type="text"
-                placeholder="enter name of employee"
+
+              <select
                 name="assignTo"
                 id="assignTo"
                 className="text-sm py-1 px-2 md:text-lg md:py-2 md:px-4 md:w-4/5 rounded outline-none bg-transparent border-[1px] border-gray-500 mb-4"
                 {...register("assignTo", { required: true })}
-              />
+              >
+                {employees?.map((employee) => {
+
+                 return <option className="bg-zinc-900 hover:bg-zinc-700" key={employee?.id} value={employee?.firstName}>{employee?.firstName}</option>;
+                })}
+              </select>
               <label htmlFor="category">Category</label>
               <input
                 type="text"

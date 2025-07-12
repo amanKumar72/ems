@@ -1,16 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthenticationContext } from "../../context/AuthContext";
 
-const EmployeesList = () => {
-  const context = useContext(AuthenticationContext);
-  const [employees, setEmployees] = useState(null);
-  useEffect(() => {
-    const employeesIds = context.getUser().data.employees;
-    
-    const emps = context.getEmployees(employeesIds);
-    setEmployees(emps,employeesIds);
-    console.log(emps)
-  }, []);
+const EmployeesList = ({employees}) => {
   return !employees ? (
     <div className="flex justify-center items-center">
       <p>No Employee Data</p>
@@ -24,7 +15,7 @@ const EmployeesList = () => {
         <h3>Completed Task</h3>
         <h3>Failed Task</h3>
       </div>
-      {employees.map((employee) => {
+      {employees?.map((employee) => {
         return (
           <div
             className="flex justify-between bg-[#1c1c1c] border-1 border-red-500  p-3 md:p-5  rounded-lg"

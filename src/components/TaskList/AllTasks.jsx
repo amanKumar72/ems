@@ -6,7 +6,7 @@ const AllTasks = () => {
   const context=useContext(AuthenticationContext)
   const user = context.getUser().data;
 
-  const bgColors = ["green-500", "red-500", "blue-500", "yellow-500"];
+  const bgColors = ["bg-purple-400", "bg-red-500", "bg-blue-500", "bg-yellow-500"];
   const tasks = user.tasks;
 
   return (

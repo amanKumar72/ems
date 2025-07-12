@@ -6,7 +6,7 @@ const TaskDetail = ({ task, color,id,taskId }) => {
   const context=useContext(AuthenticationContext)
   return (
     <div
-      className={`flex flex-col w-full md:w-[350px] lg:w-[450px] bg-${color} rounded-lg m-2 p-5  `}
+      className={`flex flex-col w-full md:w-[350px] lg:w-[450px] ${color} rounded-lg m-2 p-5  `}
     >
       <div className="flex justify-between items-center ">
         <h2 className="bg-red-700 px-4 py-2 rounded-md font-semibold ">
@@ -31,7 +31,7 @@ const TaskDetail = ({ task, color,id,taskId }) => {
 TaskDetail.propTypes = {
   //+
   task: PropTypes.shape({
-    category: PropTypes.string.isRequired, //+
+    category: PropTypes.string.isRequired , //+
     taskDate: PropTypes.string.isRequired, //+
     taskTitle: PropTypes.string.isRequired, //+
     taskDescription: PropTypes.string.isRequired, //+
